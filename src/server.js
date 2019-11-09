@@ -1,5 +1,9 @@
+/* Initializing routes and server  */
 const app = require('./app');
-const connection = require('./connection');
 
-const port = process.env.HOST_PORT || 3000
-app.listen(port, () => console.log(`Servidor escutando ${port}!`))
+/* Listening requests */
+const port = process.env.APP_PORT || 3000
+app.listen(port, () => {
+    console.log(`Server linstening on the ${port}!`)
+});
+
