@@ -1,8 +1,9 @@
-Routes = (app) => {
+const GoogleController = require('./app/controllers/google-controller')
 
-    app.get('/', (req, res) => res.send('Hello World!'))
+const Routes = (routes) => {
 
+    routes.get('/auth/google', GoogleController.redirectGoogleApi);
+    routes.get('/auth/google/callback', GoogleController.getDataFromGoogleApi);
 
 };
-
 module.exports = Routes;
