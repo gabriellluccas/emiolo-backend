@@ -1,8 +1,8 @@
 class App {
     constructor(express){
         this.express = express();
-        console.log('Initializing server...')
-        this.express.use(require('./routes'));
+        console.log('Initializing server...');
+        this.express.use(require('./routes'));        
         require('./connection');
         this.express.use(express.json());
     }

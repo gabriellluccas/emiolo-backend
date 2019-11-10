@@ -43,10 +43,10 @@ class GoogleController{
             const {email, name} = me.data;
             
             /* Save and get user */
-            const user = this.store(email, name);
+            const user = await this.store({email, name}, res);
 
             /* Redirect to dashboard */
-            res.redirect('/');
+            res.json({user, token: user.generateToken(user)});
         } catch(err){
             console.error(err);
             res.json({error: 'error in callback'});
@@ -54,15 +54,16 @@ class GoogleController{
     }
 
     /* Get and return user, if dont exist create and return user */
-    async store(params){
+    async store(params, res){
         try{
             const { email, name } = params;
             let user = await User.findOne({email});
             if(!user){
-                user = await User.create({email, password, name});
+                user = await User.create({email, name});
             }
             return user;
         } catch(err){
+            console.log(err);
             res.json({error: 'error to save or to get user in mongo'});
         }
     }

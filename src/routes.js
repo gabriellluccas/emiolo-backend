@@ -1,9 +1,12 @@
+const routes = require('express').Router();
+
 const GoogleController = require('./app/controllers/google-controller')
+// const authMiddleware = require();
 
-const Routes = (routes) => {
 
-    routes.get('/auth/google', GoogleController.redirectGoogleApi);
-    routes.get('/auth/google/callback', GoogleController.getDataFromGoogleApi);
+routes.get('/auth/google', GoogleController.redirectGoogleApi);
+routes.get('/auth/google/callback', GoogleController.getDataFromGoogleApi);
 
-};
-module.exports = Routes;
+    // routes.use(authMiddleware);
+    
+module.exports = routes;
