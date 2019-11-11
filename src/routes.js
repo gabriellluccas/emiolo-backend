@@ -10,6 +10,13 @@ routes.get('/auth/google', GoogleController.redirectGoogleApi);
 routes.get('/auth/google/callback', GoogleController.getDataFromGoogleApi);
 routes.get('/', DashboardController.listUsers);
 routes.get('/swapi/species/', SwapiController.listSpecies);
+routes.get('/swapi/planets/', SwapiController.listPlanets);
+routes.get('/swapi/specie/:id', SwapiController.getSpecie);
+routes.get('/swapi/planet/:id', SwapiController.getPlanet);
+routes.get('/swapi/film/:id', SwapiController.getFilm);
+routes.get('/swapi/vehicle/:id', SwapiController.getVehicle);
+routes.get('/swapi/starship/:id', SwapiController.getStarship);
+routes.get('/swapi/person/:id', SwapiController.getPerson);
 
     // routes.use(authMiddleware);
     
