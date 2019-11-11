@@ -22,7 +22,7 @@ class GoogleController{
             'https://www.googleapis.com/auth/userinfo.email'
         ];
         const authUrl = this._oauth2Client.generateAuthUrl({
-            // access_type: 'offline',
+            access_type: 'offline',
             scope: defaultScope
         });
         res.redirect(authUrl);
@@ -45,11 +45,11 @@ class GoogleController{
             /* Save and get user */
             const user = await this.store({email, name}, res);
 
-            /* Redirect to dashboard */
-            res.json({user, token: user.generateToken(user)});
+            /* Returning json with user and token */
+            res.json({user: {name: user.name, email:user.email}, token: user.generateToken(user)});
         } catch(err){
             console.error(err);
-            res.json({error: 'error in callback'});
+            res.json({error: 'error in google callback'});
         }
     }
 
