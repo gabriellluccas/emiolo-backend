@@ -63,7 +63,7 @@ class GoogleController{
             }
             return user;
         } catch(err){
-            console.log(err);
+            console.errors(err);
             res.json({error: 'error to save or to get user in mongo'});
         }
     }
