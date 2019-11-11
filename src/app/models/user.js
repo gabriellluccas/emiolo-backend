@@ -16,8 +16,12 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
-UserSchema.methods.generatePasswordHash = (user) => {
+UserSchema.methods.generateToken = (user) => {
     return jwt.sign({ id: user.id }, process.env.APP_SECRET);
+};
+
+UserSchema.methods.comparePassword = async (password, password_hash) => {
+    return await bcrypt.compare(password, password_hash);
 };
 
 module.exports = mongoose.model('User', UserSchema);

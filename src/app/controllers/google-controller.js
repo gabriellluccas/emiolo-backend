@@ -6,13 +6,16 @@ class GoogleController{
 
     /* Creating controller with a oath client */
     constructor(){
-        this._oauth2Client = new google.auth.OAuth2(
-            process.env.GOOGLE_ID, 
-            process.env.GOOGLE_SECRET,
-            `${process.env.APP_HOST}:${process.env.APP_PORT}${process.env.GOOGLE_REDIRECT}`
-        );
         this.redirectGoogleApi = this.redirectGoogleApi.bind(this);
         this.getDataFromGoogleApi = this.getDataFromGoogleApi.bind(this);
+    }
+
+    createNewOAuthClient(url){
+        return new google.auth.OAuth2(
+            process.env.GOOGLE_ID, 
+            process.env.GOOGLE_SECRET,
+            `${url}/`
+        );
     }
 
     /* Getting oauth client and generate auth url passing scopes and redirect url */
@@ -21,11 +24,11 @@ class GoogleController{
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
         ];
-        const authUrl = this._oauth2Client.generateAuthUrl({
+        const authUrl = this.createNewOAuthClient(req.headers.origin).generateAuthUrl({
             access_type: 'offline',
             scope: defaultScope
         });
-        res.redirect(authUrl);
+        res.json(authUrl);
     }
     
     /* Get code and recieve data */
@@ -33,7 +36,7 @@ class GoogleController{
         try{
             /* Set oauth credentials */
             const {code} = req.query;
-            const auth = this._oauth2Client;
+            const auth = this.createNewOAuthClient(req.headers.origin);
             const data = await auth.getToken(code);
             auth.setCredentials(data.tokens);
 
@@ -63,7 +66,7 @@ class GoogleController{
             }
             return user;
         } catch(err){
-            console.errors(err);
+            console.error(err);
             res.json({error: 'error to save or to get user in mongo'});
         }
     }

@@ -14,7 +14,7 @@ class App {
         const cors = require('cors');
         const allowedOrigins = [
             'http://localhost:3000',
-            'http://localhost:8080'
+            'http://localhost:8081'
         ];
         this.express.use(cors({
             origin: allowedOrigins

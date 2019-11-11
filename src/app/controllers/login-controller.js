@@ -14,7 +14,7 @@ class LoginController{
             res.json({success: 'user created'});
         } catch(err){
             console.error(err);
-            res.json({error: 'error to save or to get user in mongo'});
+            res.json({error: 'error to save or get user in mongo'});
         }
     }
     
@@ -25,14 +25,14 @@ class LoginController{
             if (!user) {
                 res.json({ error: 'email invalid' });
             }
-            const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
+            const isPasswordMatch = await user.comparePassword(password, user.password_hash);
             if (!isPasswordMatch) {
                 res.json({ error: 'password incorrect' });
             }
             res.json({user: {name: user.name, email:user.email}, token: user.generateToken(user)});    
         } catch(err){
             console.error(err);
-            res.json({error: 'error to save or to get user in mongo'});
+            res.json({error: 'error to get user in mongo'});
         }  
     }
     
