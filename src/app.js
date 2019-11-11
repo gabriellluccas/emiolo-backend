@@ -9,6 +9,8 @@ class App {
     }
 
     middleware(){
+        const bodyParser = require('body-parser');
+        this.express.use(bodyParser.json()); 
         const cors = require('cors');
         const allowedOrigins = [
             'http://localhost:3000',

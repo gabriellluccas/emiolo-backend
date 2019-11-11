@@ -13,7 +13,7 @@ class LoginController{
             }
             res.json({success: 'user created'});
         } catch(err){
-            console.errors(err);
+            console.error(err);
             res.json({error: 'error to save or to get user in mongo'});
         }
     }
@@ -31,7 +31,7 @@ class LoginController{
             }
             res.json({user: {name: user.name, email:user.email}, token: user.generateToken(user)});    
         } catch(err){
-            console.errors(err);
+            console.error(err);
             res.json({error: 'error to save or to get user in mongo'});
         }  
     }
